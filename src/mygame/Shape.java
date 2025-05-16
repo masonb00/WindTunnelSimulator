@@ -70,4 +70,9 @@ public abstract class Shape
 	{
 		return this.material;
 	}
+        
+        /**
+         * Purpose: To create an abstract method to get the shapeType of subclasses
+         */
+        public abstract String getShapeType();
 }

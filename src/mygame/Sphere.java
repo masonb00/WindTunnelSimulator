@@ -50,6 +50,7 @@ public class Sphere extends Shape
 	 * Purpose: To get the type of shape
 	 * @return String, the type of shape
 	 */
+        @Override
 	public String getShapeType()
 	{
 		return shapeType;

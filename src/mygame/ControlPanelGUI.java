@@ -33,61 +33,63 @@ public class ControlPanelGUI
     private final Label windSpeedLabel; //ControlPanelGUI HAS-A Label
     private final Label dragForceLabel; //ControlPanelGUI HAS-A Label
     private final Slider windSpeedSlider; //ControlPanelGUI HAS-A Slider
-    private final VersionedReference<Double> sliderRef;
-    private final DefaultRangedValueModel model = new DefaultRangedValueModel(0, 100, 10);
+    private final VersionedReference<Double> sliderRef; 
+    private final DefaultRangedValueModel model = new DefaultRangedValueModel(0, 100, 10); //ControlPanelGUI HAS-A DefaultRangedValueModel
     
     public ControlPanelGUI(Node guiNode, Camera cam, Main mainApp)
     {
         //Define the GUI
-        panel = new Container();
-        guiNode.attachChild(panel);
-        panel.setLocalTranslation(50, cam.getHeight() - 50, 0);
-        panel.setInsets(new Insets3f(10, 10, 10, 10));
+        panel = new Container(); //create the panel
+        guiNode.attachChild(panel); //attach panel to GUI
+        panel.setLocalTranslation(50, cam.getHeight() - 50, 0); //set GUI location
+        panel.setInsets(new Insets3f(10, 10, 10, 10)); //set inset values in panel
         
         //Add to layout manager
-        Container shapeSection = new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Last, FillMode.Even));
-        shapeSection.setInsets(new Insets3f(5, 5, 5, 5));
-        shapeSection.addChild(new Label("Choose Shape: "));
+        Container shapeSection = new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Last, FillMode.Even)); //create layout
+        shapeSection.setInsets(new Insets3f(5, 5, 5, 5)); //sets padding size of components in layout
+        shapeSection.addChild(new Label("Choose Shape: ")); //add shape button label to layout manager
    
         //Create the Shape buttons
-        Button sphereButton = new Button("Sphere");
-        Button cubeButton = new Button("Cube");
-        Button flatPlateButton = new Button("Flat Plate");
+        Button sphereButton = new Button("Sphere"); //create sphere button
+        Button cubeButton = new Button("Cube"); //create cube button
+        Button flatPlateButton = new Button("Flat Plate"); //create flatplate button
         
         //Add Shape buttons to layout manager
-        shapeSection.addChild(sphereButton);
-        shapeSection.addChild(cubeButton);
-        shapeSection.addChild(flatPlateButton);
+        shapeSection.addChild(sphereButton); //add sphere button to layout manager
+        shapeSection.addChild(cubeButton); //add cube button to layout manager
+        shapeSection.addChild(flatPlateButton); //add flatplate button to layout manager
             
         //Shape Button Action Logic
-        sphereButton.addClickCommands(source -> mainApp.setShape("Sphere"));
-        cubeButton.addClickCommands(source -> mainApp.setShape("Cube"));
-        flatPlateButton.addClickCommands(source -> mainApp.setShape("FlatPlate"));
+        sphereButton.addClickCommands(source -> mainApp.setShape("Sphere")); //sets button logic (changes the shape of the object in the scene)
+        cubeButton.addClickCommands(source -> mainApp.setShape("Cube")); //sets button logic
+        flatPlateButton.addClickCommands(source -> mainApp.setShape("FlatPlate")); //sets button logic
         
         //Add layout manager to the panel
         panel.addChild(shapeSection);
         
         //Create Wind Speed Slider Section
-        Container windSpeedSection = new Container();
-        windSpeedSection.setInsets(new Insets3f(5, 5, 5, 5));
-        windSpeedLabel = new Label("Wind Speed: 10 m/s");
-        windSpeedSection.addChild(windSpeedLabel);
+        Container windSpeedSection = new Container(); //create the Wind speed section container
+        windSpeedSection.setInsets(new Insets3f(5, 5, 5, 5)); //set inset padding
+        windSpeedLabel = new Label("Wind Speed: 10 m/s"); //set new label to initial wind speed
+        windSpeedSection.addChild(windSpeedLabel);  //add label to windspeedsection container
         
         //Create Wind Speed Slider
-        windSpeedSlider = new Slider();
-        windSpeedSlider.setDelta(1f);
-        windSpeedSlider.setPreferredSize(new com.jme3.math.Vector3f(200, 20, 0));
-        windSpeedSlider.setModel(model);
+        windSpeedSlider = new Slider(); //create new slider
+        windSpeedSlider.setDelta(1f); //set the step to 1
+        windSpeedSlider.setPreferredSize(new com.jme3.math.Vector3f(200, 20, 0)); //set the size of the slider
+        windSpeedSlider.setModel(model); //set the range of the slider to the ranged model field
         
         //Create VersionedReference for the slider
         sliderRef = windSpeedSlider.getModel().createReference();
+        //Versioned reference sliderRef is a bool that indicates whether or not the slider has been changed since last checked
+        //saving resources from checking slider when there was no change
         
-        windSpeedSection.addChild(windSpeedSlider);
-        panel.addChild(windSpeedSection);
+        windSpeedSection.addChild(windSpeedSlider); //add slider to windSpeedSection container
+        panel.addChild(windSpeedSection); //add WindSpeedSection to panel
         
         //Create label for Drag Force
         dragForceLabel = new Label("Drag Force: 0 Newtons");
-        windSpeedSection.addChild(dragForceLabel);
+        windSpeedSection.addChild(dragForceLabel); //add dragForceLabel to the windSpeedSection container
     }
     
     public Container getPanel()

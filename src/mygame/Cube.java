@@ -25,7 +25,7 @@ import com.jme3.scene.Geometry;
 public class Cube extends Shape
 {
     /////Fields/////
-	private final String shapeType = "Box"; //The type of shape
+	private final String shapeType = "Cube"; //The type of shape
 	
 	/////Constructors/////
 	/**
@@ -51,6 +51,7 @@ public class Cube extends Shape
 	 * Purpose: To get the type of shape
 	 * @return String, the type of shape
 	 */
+        @Override
 	public String getShapeType()
 	{
 		return shapeType;

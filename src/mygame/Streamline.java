@@ -43,9 +43,9 @@ public class Streamline
         Line streamline = new Line(startPos, endPos); //Streamline IS-A line
         lineGeom = new Geometry("Streamline", streamline);
                 
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Cyan);
-        lineGeom.setMaterial(mat);
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md"); //create streamline material in JMonkey
+        mat.setColor("Color", ColorRGBA.Cyan); //set color
+        lineGeom.setMaterial(mat); //set material to streamline geom
     }
     
     /////Methods/////
@@ -68,12 +68,12 @@ public class Streamline
         {
             for (int z = -gridZ / 2; z < gridZ / 2; z++)
             {
-                Vector3f start = new Vector3f(-5f, y * spacing, z * spacing);
-                Vector3f end = new Vector3f(5f, y * spacing, z * spacing);
+                Vector3f start = new Vector3f(-5f, y * spacing, z * spacing); //startpoint of streamline
+                Vector3f end = new Vector3f(5f, y * spacing, z * spacing); //endpoint of streamline
                 
-                Streamline streamline = new Streamline(assetManager, start, end);
+                Streamline streamline = new Streamline(assetManager, start, end); //create streamline from start to end
                 
-                streamlineNode.attachChild(streamline.getGeometry());
+                streamlineNode.attachChild(streamline.getGeometry()); //attach streamline to streamline node
             }
         }
     }

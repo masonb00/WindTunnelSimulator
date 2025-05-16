@@ -16,31 +16,13 @@
 	<classpathentry kind="lib" path="lib/jme3-effects-3.7.0-stable.jar"/>
 	<classpathentry kind="lib" path="lib/jme3-plugins-3.7.0-stable.jar"/>
 	<classpathentry kind="lib" path="lib/jme3-terrain-3.7.0-stable.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/jmonkeyplatform/jmonkeyplatform/modules/ext/lwjgl-platform-2.9.5-natives-windows.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="WindTunnelSimulator/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/jmonkeyplatform/jmonkeyplatform/modules/ext/lwjgl-2.9.5.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="WindTunnelSimulator/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/jmonkeyplatform/jmonkeyplatform/modules/ext/jme3-plugins-3.7.0-stable.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="WindTunnelSimulator/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/jmonkeyplatform/jmonkeyplatform/modules/ext/jme3-plugins-json-3.7.0-stable.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="WindTunnelSimulator/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Java/groovy-all-2.4.21.jar"/>
-	<classpathentry kind="lib" path="C:/Java/guava-23.0.jar"/>
-	<classpathentry kind="lib" path="C:/Java/lemur-1.16.0.jar"/>
-	<classpathentry kind="lib" path="C:/Java/lemur-proto-1.13.0.jar"/>
-	<classpathentry kind="lib" path="C:/Java/slf4j-api-2.0.17.jar"/>
-	<classpathentry kind="lib" path="C:/Java/slf4j-simple-2.0.17.jar"/>
+	<classpathentry kind="lib" path="lib/groovy-all-2.4.21.jar"/>
+	<classpathentry kind="lib" path="lib/guava-23.0.jar"/>
+	<classpathentry kind="lib" path="lib/jme3-plugins-json-3.7.0-stable.jar"/>
+	<classpathentry kind="lib" path="lib/lemur-1.16.0.jar"/>
+	<classpathentry kind="lib" path="lib/lemur-proto-1.13.0.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl-platform-2.9.5-natives-windows.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-2.0.17.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-simple-2.0.17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

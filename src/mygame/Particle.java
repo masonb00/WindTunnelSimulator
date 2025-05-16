@@ -107,13 +107,13 @@ public class Particle
         {
             for (int z = -gridZ / 2; z < gridZ / 2; z++)
             {
-                Vector3f startPos = new Vector3f(xStart, y * spacing, z * spacing);
-                Particle particle = new Particle(assetManager, startPos);
+                Vector3f startPos = new Vector3f(xStart, y * spacing, z * spacing); //set starting position of particle
+                Particle particle = new Particle(assetManager, startPos); //create new particle
                 
-                originalOffsets.put(particle.getGeometry(), startPos);
-                particles.add(particle.getGeometry());
-                particleNode.attachChild(particle.getGeometry());
-                particleNode.setCullHint(Spatial.CullHint.Always);
+                originalOffsets.put(particle.getGeometry(), startPos); //store particle in hash map
+                particles.add(particle.getGeometry()); //add particle to array list
+                particleNode.attachChild(particle.getGeometry()); //attach particle to the particle node
+                particleNode.setCullHint(Spatial.CullHint.Always); //show the particle
             }
         }
     }
