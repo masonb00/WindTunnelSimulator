@@ -61,6 +61,7 @@ public class Streamline
     
     /**
      * Purpose: To create a Streamline
+     * Static because it is not modifying any existing instances of streamline, and are building new streamlines
      */
     public static void buildStreamlines(AssetManager assetManager, Node streamlineNode,int gridY, int gridZ, float spacing)
     {

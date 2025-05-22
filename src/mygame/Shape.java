@@ -25,9 +25,9 @@ public abstract class Shape
 	/////Fields/////
 	private final double xArea; //The cross sectional area of the shape
 	//A Shape HAS-A MaterialProperty
-	protected MaterialProperty material; //The material property of the shape
+	private MaterialProperty material; //The material property of the shape
         //Shape HAS-A Geometry
-        protected Geometry geometry; //The geometry of the shape
+        private Geometry geometry; //The geometry of the shape
 	
 	/////Constructors/////
 	/**
@@ -75,4 +75,20 @@ public abstract class Shape
          * Purpose: To create an abstract method to get the shapeType of subclasses
          */
         public abstract String getShapeType();
+        
+        /**
+         * Purpose" To set the geometry of the shape
+         */
+        public void setGeometry(Geometry geo)
+        {
+            this.geometry = geo;
+        }
+        
+        /**
+         * Purpose: To set the material of the object
+         */
+        public void setMaterial(MaterialProperty mat)
+        {
+            this.material = mat;
+        }
 }

@@ -23,6 +23,7 @@ import java.util.HashMap;
  * References:
  * “JMonkeyEngine Docs.” jMonkeyEngine Docs, wiki.jmonkeyengine.org/docs/3.4/tutorials/beginner/hello_simpleapplication.html. Accessed 11 Apr. 2025.  
  * “W3schools.Com.” W3Schools Online Web Tutorials, www.w3schools.com/java/java_lambda.asp. Accessed 9 May 2025. 
+ * Analoglistener (JMONKEYENGINE3), 25 Apr. 2021, javadoc.jmonkeyengine.org/v3.4.0-beta2/com/jme3/input/controls/AnalogListener.html. 
  * 
  * Version/date: V1
  * 

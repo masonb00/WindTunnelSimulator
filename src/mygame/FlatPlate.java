@@ -40,10 +40,10 @@ public class FlatPlate extends Shape
             
             //Build the 3-D Shape
             com.jme3.scene.shape.Box mesh = new com.jme3.scene.shape.Box(1f, 0.05f, 1f);
-            this.geometry = new Geometry("FlatPlateObject", mesh);
+            this.setGeometry(new Geometry("FlatPlateObject", mesh));
             
-            this.geometry.setMaterial(material.createJmeMaterial(assetManager));
-            this.geometry.setLocalTranslation(0, 0, 0);
+            this.getGeometry().setMaterial(this.getMaterial().createJmeMaterial(assetManager));
+            this.getGeometry().setLocalTranslation(0, 0, 0);
 	}
 	
 	/////Methods/////

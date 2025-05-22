@@ -24,5 +24,6 @@
 	<classpathentry kind="lib" path="lib/lwjgl-platform-2.9.5-natives-windows.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-2.0.17.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-simple-2.0.17.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl-2.9.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

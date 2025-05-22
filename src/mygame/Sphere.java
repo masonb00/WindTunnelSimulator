@@ -39,10 +39,10 @@ public class Sphere extends Shape
             
             //Build the 3-D Shape
             com.jme3.scene.shape.Sphere mesh = new com.jme3.scene.shape.Sphere(32, 32, 1f);
-            this.geometry = new Geometry("SphereObject", mesh);
+            this.setGeometry(new Geometry("SphereObject", mesh));
             
-            this.geometry.setMaterial(material.createJmeMaterial(assetManager));
-            this.geometry.setLocalTranslation(0, 0, 0);
+            this.getGeometry().setMaterial(this.getMaterial().createJmeMaterial(assetManager));
+            this.getGeometry().setLocalTranslation(0, 0, 0);
 	}
 	
 	/////Methods/////

@@ -1,11 +1,22 @@
 package mygame;
 import com.jme3.app.SimpleApplication;
+import com.jme3.input.MouseInput;
+import com.jme3.input.RawInputListener;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
+import com.jme3.input.controls.MouseAxisTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.input.event.*;
+import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.CameraNode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.control.CameraControl;
 import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.Label;
 import com.simsilica.lemur.core.VersionedReference;
@@ -26,6 +37,7 @@ import com.simsilica.lemur.style.BaseStyles;
  * References:
  * “JMonkeyEngine Docs.” jMonkeyEngine Docs, wiki.jmonkeyengine.org/docs/3.4/tutorials/beginner/hello_simpleapplication.html. Accessed 11 Apr. 2025. 
  * “W3schools.Com.” W3Schools Online Web Tutorials, www.w3schools.com/java/java_lambda.asp. Accessed 9 May 2025. 
+ * Buba, et al. “Rotation around Object.” jMonkeyEngine Hub, 9 Apr. 2009, hub.jmonkeyengine.org/t/rotation-around-object/9875. 
  * 
  * Version/date: V1
  * 
@@ -54,6 +66,12 @@ public class Main extends SimpleApplication
     private MaterialProperty mesh = new MaterialProperty("Mesh", 1.6, ColorRGBA.Gray); //Main HAS-A MaterialProperty
     private MaterialProperty foam = new MaterialProperty("Foam", 1.2, ColorRGBA.Orange); //Main HAS-A MaterialProperty
     private MaterialProperty carbonFiber = new MaterialProperty("Carbon Fiber", 1.28, ColorRGBA.DarkGray); //Main HAS-A MaterialProperty
+    private Node cameraPivot; //Node to hold camera pivot
+    private CameraNode camNode; //CameraNode
+    private boolean rightDragging = false; //Boolean to tell if R mouse buttong is being clicked
+    private int previousX; //previous x coord
+    private int previousY; //previous y coord
+    
     
             
     public static void main(String[] args)
@@ -87,7 +105,7 @@ public class Main extends SimpleApplication
         //Add the GUI
         GuiGlobals.initialize(this); //initialize the gui in the current application
         BaseStyles.loadGlassStyle(); //style the GUI
-        stateManager.attach(new MouseAppState(this)); //enable mouse support for GUI components
+        stateManager.attach(new MouseAppState(this)); //enable mouse support for GUI compnents
         GuiGlobals.getInstance().getFocusManagerState().setEnabled(true); //sets the GUI focus to true to enable interaction
         
         ControlPanelGUI gui = new ControlPanelGUI(guiNode, cam, this); //create the GUI
@@ -96,7 +114,7 @@ public class Main extends SimpleApplication
         dragForceLabel = gui.getdragForceLabel(); //sets label equal to dragForce
               
         //Add lighting
-        DirectionalLight sun = new DirectionalLight(); //Add in directional lighting for stage
+        DirectionalLight sun = new DirectionalLight(); //Add in diectional lighting for stage
         sun.setDirection(new Vector3f(-1, -2, -3).normalizeLocal()); //sets the direction of the directional lighting
         sun.setColor(ColorRGBA.White); //sets the color of the light
         rootNode.addLight(sun); //Attaches the light to the scene
@@ -106,10 +124,17 @@ public class Main extends SimpleApplication
         inputManager.addListener(toggleListener, "ToggleView"); //Adds the listener to the new mapping
             
         viewPort.setBackgroundColor(ColorRGBA.DarkGray); //Sets the background color to dark gray      
+        
+        //Camera Controls
+        flyCam.setEnabled(false); //Disbale the default flycam
+        initCameraOrbit(); //Set cam to orbit mode
+        initControls(); //set cam controls
+        
+        
     }
     
     //Create the toggleListener for ViewMode enum
-    private final com.jme3.input.controls.ActionListener toggleListener = new com.jme3.input.controls.ActionListener() 
+    private final ActionListener toggleListener = new com.jme3.input.controls.ActionListener() 
     {
         @Override
         public void onAction(String name, boolean isPressed, float timePerFrame)
@@ -220,5 +245,108 @@ public class Main extends SimpleApplication
             System.err.println("Unexpected Error while setting shape: " + e.getMessage()); //print error message
         }
     }
-
+    
+    /**
+     * Purpose: To initialize the orbital camera
+     */
+    private void initCameraOrbit()
+    {
+        cameraPivot = new Node("CameraPivot"); //define cameraPivot
+        rootNode.attachChild(cameraPivot); //attach it to the scene
+        
+        camNode = new CameraNode("CamNode", cam); //define camNode
+        camNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera); //Set the cam fixed to the node
+        camNode.setLocalTranslation(0, 0, 100); //Set camera distance to center
+        camNode.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y); //points cam at origin of scene
+        
+        cameraPivot.attachChild(camNode); //attaches camNOde to the camera pivut
+    }
+    
+    /**
+     * Purpose: To add controls and listeners to key mapping
+     */
+    public void initControls()
+    {
+        inputManager.addMapping("RightClick", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT)); //add mapping for right click
+        inputManager.addMapping("ZoomIn", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false)); //add mapping for mouse wheel up
+        inputManager.addMapping("ZoomOut", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true)); //add mapping for mouse wheel down
+        
+        inputManager.addListener(actionListener, "RightClick"); //add listener to right click
+        inputManager.addListener(analogListener, "ZoomIn", "ZoomOut"); //add listener to mouse wheel
+        inputManager.addRawInputListener(mouseListener); //add mouse listener to calculate delta
+    }
+    
+    /**
+     * Purpose: To create an ActionListener for use in the camera Controls
+     */
+    private final ActionListener actionListener = new ActionListener()
+    {
+        public void onAction(String name, boolean isPressed, float timePerFrame)
+        {
+            if ("RightClick".equals(name)) //Check if r mouse button is clicked
+            {
+                rightDragging = isPressed; //update rightDragging to match current state
+                if (isPressed)
+                {
+                    Vector2f cursorPos = inputManager.getCursorPosition(); //get the current cursor position
+                    previousX = (int) cursorPos.x; //store cursor x coord
+                    previousY = (int) cursorPos.y; //store cursor y coord
+                }
+            }
+        }
+    };
+    
+    /**
+     * Purpose: To create the analog listener for camera zoom feature
+     */
+    private final AnalogListener analogListener = new AnalogListener()
+    {
+        public void onAnalog(String name, float value, float timePerFrame)
+        {
+            Vector3f current = camNode.getLocalTranslation(); //get current position of cam
+            float zoomSpeed = 50f * timePerFrame; //set cam zoom speed per tick
+            
+            if("ZoomIn".equals(name))
+            {
+                camNode.setLocalTranslation(current.add(cam.getDirection().mult(zoomSpeed))); //set position of cam to zoom in
+            }
+            else if ("ZoomOut".equals(name))
+                {
+                    camNode.setLocalTranslation(current.subtract(cam.getDirection().mult(zoomSpeed))); //set position of cam to zoom out
+                }
+        }
+    };
+    
+    /**
+     * Purpose: To create a raw input listener to get the mouse delta for camera movement
+     */
+    private final RawInputListener mouseListener = new RawInputListener()
+    {
+        @Override
+        public void onMouseMotionEvent(MouseMotionEvent event)
+        {
+            if (rightDragging) //if cursor is being dragged
+            {
+                int currentX = event.getX(); //get current cursor x pos
+                int currentY = event.getY(); //get current cursor y pos
+                
+                float deltaX = currentX - previousX; //get drag distance x
+                float deltaY = currentY - previousY; //get drag distance y
+                
+                cameraPivot.rotate(0, -deltaX * 0.01f, 0); //Orbit horizontal
+                cameraPivot.rotate(-deltaY * 0.01f, 0, 0); //Orbit vertical
+                
+                previousX = currentX; //set new previous position x
+                previousY = currentY; //set new previous position y
+            }
+        }
+        //All methods if rawInputListener must be overriden, left blank and unused in our case
+        @Override public void beginInput() {}
+        @Override public void endInput() {}
+        @Override public void onJoyAxisEvent(JoyAxisEvent event) {}
+        @Override public void onJoyButtonEvent(JoyButtonEvent event) {}
+        @Override public void onMouseButtonEvent(MouseButtonEvent event) {}
+        @Override public void onKeyEvent(KeyInputEvent event) {}
+        @Override public void onTouchEvent(com.jme3.input.event.TouchEvent event) {}
+    };
 }

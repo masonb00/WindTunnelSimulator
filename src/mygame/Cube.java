@@ -25,7 +25,7 @@ import com.jme3.scene.Geometry;
 public class Cube extends Shape
 {
     /////Fields/////
-	private final String shapeType = "Cube"; //The type of shape
+	private final String shapeType = "Box"; //The type of shape
 	
 	/////Constructors/////
 	/**
@@ -40,10 +40,10 @@ public class Cube extends Shape
             
             //Build the 3-D Shape
             com.jme3.scene.shape.Box mesh = new com.jme3.scene.shape.Box(1f, 1f, 1f);
-            this.geometry = new Geometry("CubeObject", mesh);
+            this.setGeometry(new Geometry("CubeObject", mesh));
             
-            this.geometry.setMaterial(material.createJmeMaterial(assetManager));
-            this.geometry.setLocalTranslation(0, 0, 0);
+            this.getGeometry().setMaterial(this.getMaterial().createJmeMaterial(assetManager));
+            this.getGeometry().setLocalTranslation(0, 0, 0);
 	}
 	
 	/////Methods/////
