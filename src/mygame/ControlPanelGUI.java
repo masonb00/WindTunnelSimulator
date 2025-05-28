@@ -90,8 +90,13 @@ public class ControlPanelGUI
         //Create label for Drag Force
         dragForceLabel = new Label("Drag Force: 0 Newtons");
         windSpeedSection.addChild(dragForceLabel); //add dragForceLabel to the windSpeedSection container
+        
+        //Create save button
+        Button saveButton = new Button ("Save"); //create the save button
+        windSpeedSection.addChild(saveButton); //add save button to the container
+        WindTunnel tunnel = mainApp.getTunnel();
+        saveButton.addClickCommands(source -> IO.save(tunnel.getShape().getShapeType(), tunnel.getShape().getMaterial().toString(), tunnel.getWindSpeed(), tunnel.computeDrag(tunnel.getShape())));
     }
-    
     public Container getPanel()
     {
         return panel;

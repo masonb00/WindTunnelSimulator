@@ -93,7 +93,7 @@ public class Main extends SimpleApplication
         rootNode.attachChild(streamlineNode);
         rootNode.attachChild(particleNode);
         
-        tunnel = new WindTunnel(10); //Create WindTunnel with speed 10 m/s
+        tunnel = new WindTunnel(10, testShape); //Create WindTunnel with speed 10 m/s
         double drag = tunnel.computeDrag(testShape);
         
         //Build streamlines
@@ -101,6 +101,7 @@ public class Main extends SimpleApplication
         
         //Build Particles
         Particle.buildParticles(assetManager, particleNode, particles, originalOffsets, xStart, gridY, gridZ, spacing);
+        
         
         //Add the GUI
         GuiGlobals.initialize(this); //initialize the gui in the current application
@@ -130,7 +131,7 @@ public class Main extends SimpleApplication
         initCameraOrbit(); //Set cam to orbit mode
         initControls(); //set cam controls
         
-        
+        //IO implementation
     }
     
     //Create the toggleListener for ViewMode enum
@@ -349,4 +350,12 @@ public class Main extends SimpleApplication
         @Override public void onKeyEvent(KeyInputEvent event) {}
         @Override public void onTouchEvent(com.jme3.input.event.TouchEvent event) {}
     };
+    
+    /**
+     * Purpose: To get the wind tunnel object
+     */
+    public WindTunnel getTunnel()
+    {
+        return tunnel;
+    }
 }

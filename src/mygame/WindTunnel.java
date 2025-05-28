@@ -34,10 +34,11 @@ public class WindTunnel
 	 * Purpose: To create a default constructor with airDensity set to sea level
 	 * @param newWindSpeed, the windSpeed in the tunnel
 	 */
-	public WindTunnel (double newWindSpeed)
+	public WindTunnel (double newWindSpeed, Shape testShape)
 	{
 		this.windSpeed = newWindSpeed;
 		this.particles = new ArrayList<>();
+                this.shape = testShape;
 	}
 	
 	/**
@@ -61,7 +62,7 @@ public class WindTunnel
 	{
 		for (Particle p : particles) //Iterate through particles
 		{
-			p.updateParticleX(windSpeed, timeStep); //Update the x position of the particles based on windSpeed and timeStep
+                    p.updateParticleX(windSpeed, timeStep); //Update the x position of the particles based on windSpeed and timeStep
 		}
 	}
 	
@@ -72,7 +73,7 @@ public class WindTunnel
 	 */
 	public double computeDrag(Shape shape)
 	{
-		return shape.computeDragForce(windSpeed, airDensity);
+            return shape.computeDragForce(windSpeed, airDensity);
 	}
 	
 	
@@ -83,6 +84,22 @@ public class WindTunnel
 	public void setWindSpeed(double newWindSpeed)
         {
             this.windSpeed = newWindSpeed;
+        }
+        
+        /**
+         * Purpose: To get the wind Speed in the tunnel
+         */
+        public double getWindSpeed()
+        {
+            return windSpeed;
+        }
+        
+        /**
+         * Purpose: To get the shape in the wind tunnel
+         */
+        public Shape getShape()
+        {
+            return shape;
         }
 	
 }
