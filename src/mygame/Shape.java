@@ -28,17 +28,21 @@ public abstract class Shape
 	private MaterialProperty material; //The material property of the shape
         //Shape HAS-A Geometry
         private Geometry geometry; //The geometry of the shape
+        
+        private String shapeType; //The type of shape
 	
 	/////Constructors/////
 	/**
 	 * Purpose: To define the abstract constructor for shape 
 	 * @param newXArea. the cross sectional area of the shape
 	 * @param newMaterial, the MaterialProperty of the shape
+         * @param newShapeType, the type of shape being created
 	 */
-	public Shape (double newXArea, MaterialProperty newMaterial)
+	public Shape (String newShapeType, double newXArea, MaterialProperty newMaterial)
 	{
 		this.xArea = newXArea;
 		this.material = newMaterial;
+                this.shapeType = newShapeType;
 	}
 	
 	/////Methods/////
@@ -74,7 +78,18 @@ public abstract class Shape
         /**
          * Purpose: To create an abstract method to get the shapeType of subclasses
          */
-        public abstract String getShapeType();
+        public String getShapeType()
+        {
+            return shapeType;
+        }
+        
+        /**
+         * Purpose: To set the type of shape
+         */
+        public void setShapeType(String newShapeType)
+        {
+            this.shapeType = newShapeType;
+        }
         
         /**
          * Purpose" To set the geometry of the shape

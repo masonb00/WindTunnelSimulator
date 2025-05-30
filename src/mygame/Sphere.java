@@ -24,7 +24,7 @@ import com.jme3.asset.AssetManager;
 public class Sphere extends Shape 
 {
 	/////Fields/////
-	private final String shapeType = "Sphere"; //The type of shape
+	
 	
 	/////Constructors/////
 	/**
@@ -35,7 +35,7 @@ public class Sphere extends Shape
 	 */
 	public Sphere (double newXArea, MaterialProperty newMaterial, AssetManager assetManager)
 	{
-            super(newXArea, newMaterial);
+            super("Sphere", newXArea, newMaterial);
             
             //Build the 3-D Shape
             com.jme3.scene.shape.Sphere mesh = new com.jme3.scene.shape.Sphere(32, 32, 1f);
@@ -45,16 +45,6 @@ public class Sphere extends Shape
             this.getGeometry().setLocalTranslation(0, 0, 0);
 	}
 	
-	/////Methods/////
-	/**
-	 * Purpose: To get the type of shape
-	 * @return String, the type of shape
-	 */
-        @Override
-	public String getShapeType()
-	{
-		return shapeType;
-	}
 	
 	/**
 	 * Purpose: To define a toString method for type Sphere
@@ -62,7 +52,7 @@ public class Sphere extends Shape
         @Override
 	public String toString()
 	{
-		return shapeType + " with " + getMaterial().getName();
+		return getShapeType() + " with " + getMaterial().getName();
 	}
 	
 	

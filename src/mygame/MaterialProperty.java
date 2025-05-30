@@ -54,8 +54,8 @@ public class MaterialProperty
          */
         public Material createJmeMaterial(AssetManager assetManager)
         {
-            Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-            mat.setBoolean("UseMaterialColors", true);
+            //This file is in the jME3-core-3.7.0-stable.jar in the /lib folder of the project and is used to render simple objects in the jMonkeyEngine
+            Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md"); 
             mat.setColor("Diffuse", ColorRGBA.Blue);
             mat.setColor("Ambient", ColorRGBA.Blue);
             

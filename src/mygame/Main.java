@@ -49,6 +49,7 @@ public class Main extends SimpleApplication
     private WindTunnel tunnel; //Main HAS-A WindTunnel
     private Label windSpeedLabel; //Main HAS-A windSpeedLabel Label
     private Label dragForceLabel; //Main HAS-A dragForceLabel Label
+    private Label errorLabel; //Main HAS-A errorLabel label
     private Shape testShape; //Main HAS-A testShape Shape
     private final float xStart = -5f; //global var
     private enum ViewMode { STREAMLINES, PARTICLES} //used to switch between particle and streamlined view
@@ -60,14 +61,17 @@ public class Main extends SimpleApplication
     private final int gridY = 10; //y length of the grid
     private final int gridZ = 10; //z length of the grid
     private final float spacing = 0.3f; //spacing of the grid
-    private VersionedReference<Double> sliderRef; //boolean to determine if slider has been changed since last tick
+    private VersionedReference<Double> sliderRef; //Main HAS-A VersionedReference for wind speed slider
+    //boolean to determine if slider has been changed since last tick
+    //Versioned reference sliderRef is a bool that indicates whether or not the slider has been changed since last checked
+    //saving resources from checking slider when there was no change
     private MaterialProperty aluminum = new MaterialProperty("Aluminum", 0.47, ColorRGBA.Blue); //Main HAS-A MaterialProperty
     private MaterialProperty wood = new MaterialProperty("Wood", 0.82, ColorRGBA.Brown); //Main HAS-A MaterialProperty
     private MaterialProperty mesh = new MaterialProperty("Mesh", 1.6, ColorRGBA.Gray); //Main HAS-A MaterialProperty
     private MaterialProperty foam = new MaterialProperty("Foam", 1.2, ColorRGBA.Orange); //Main HAS-A MaterialProperty
     private MaterialProperty carbonFiber = new MaterialProperty("Carbon Fiber", 1.28, ColorRGBA.DarkGray); //Main HAS-A MaterialProperty
     private Node cameraPivot; //Node to hold camera pivot
-    private CameraNode camNode; //CameraNode
+    private CameraNode camNode; //Main HAS-A CameraNode
     private boolean rightDragging = false; //Boolean to tell if R mouse buttong is being clicked
     private int previousX; //previous x coord
     private int previousY; //previous y coord
@@ -233,17 +237,20 @@ public class Main extends SimpleApplication
                 case "Sphere" -> testShape = new Sphere(0.1, aluminum, assetManager);
                 case "Cube" -> testShape = new Cube(0.1, aluminum, assetManager);
                 case "FlatPlate" -> testShape = new FlatPlate(0.1, aluminum, assetManager);
-                default -> System.out.println("Invalid Input");     
+                default -> throw new IllegalArgumentException("Invalid Shape");
             }
 
             rootNode.attachChild(testShape.getGeometry()); //attach new shape to the scene
 
             double drag = tunnel.computeDrag(testShape); //recompute drag force
             dragForceLabel.setText(String.format("Drag Force: %.2f Newtons", drag)); //set label to new drag force
+            errorLabel.setText("");
         }
         catch (Exception e) //catch general exceptions
         {
-            System.err.println("Unexpected Error while setting shape: " + e.getMessage()); //print error message
+            String message = "Error: " + e.getMessage();
+            errorLabel.setText(message);
+            System.err.println(message);
         }
     }
     

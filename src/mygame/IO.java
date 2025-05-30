@@ -26,6 +26,7 @@ public class IO
 {
     private static final String TEST_SAVE_FILE = "testStats.txt"; //file to save test data
     
+    //IO save is used in ControlPanelGUI.java and is triggered by the button click on the "save" button
     public static void save(String shapeType, String materialName, double windSpeed, double dragForce)
     {
         try (FileWriter writer = new FileWriter(TEST_SAVE_FILE, true)) //IO HAS-A FileWriter

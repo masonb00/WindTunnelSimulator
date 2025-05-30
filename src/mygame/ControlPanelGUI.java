@@ -33,8 +33,9 @@ public class ControlPanelGUI
     private final Label windSpeedLabel; //ControlPanelGUI HAS-A Label
     private final Label dragForceLabel; //ControlPanelGUI HAS-A Label
     private final Slider windSpeedSlider; //ControlPanelGUI HAS-A Slider
-    private final VersionedReference<Double> sliderRef; 
+    private final VersionedReference<Double> sliderRef; //ControlPanel HAS-A VersionedReference
     private final DefaultRangedValueModel model = new DefaultRangedValueModel(0, 100, 10); //ControlPanelGUI HAS-A DefaultRangedValueModel
+    
     
     public ControlPanelGUI(Node guiNode, Camera cam, Main mainApp)
     {
@@ -53,11 +54,13 @@ public class ControlPanelGUI
         Button sphereButton = new Button("Sphere"); //create sphere button
         Button cubeButton = new Button("Cube"); //create cube button
         Button flatPlateButton = new Button("Flat Plate"); //create flatplate button
+        Label errorLabel = new Label(""); //create error label
         
         //Add Shape buttons to layout manager
         shapeSection.addChild(sphereButton); //add sphere button to layout manager
         shapeSection.addChild(cubeButton); //add cube button to layout manager
         shapeSection.addChild(flatPlateButton); //add flatplate button to layout manager
+        shapeSection.addChild(errorLabel); //add the error label to the layout manager
             
         //Shape Button Action Logic
         sphereButton.addClickCommands(source -> mainApp.setShape("Sphere")); //sets button logic (changes the shape of the object in the scene)

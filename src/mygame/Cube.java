@@ -24,8 +24,7 @@ import com.jme3.scene.Geometry;
 //A Cube IS-A Shape
 public class Cube extends Shape
 {
-    /////Fields/////
-	private final String shapeType = "Box"; //The type of shape
+        /////Fields/////
 	
 	/////Constructors/////
 	/**
@@ -36,7 +35,7 @@ public class Cube extends Shape
 	 */
 	public Cube (double newXArea, MaterialProperty newMaterial, AssetManager assetManager)
 	{
-            super(newXArea, newMaterial);
+            super("Cube", newXArea, newMaterial);
             
             //Build the 3-D Shape
             com.jme3.scene.shape.Box mesh = new com.jme3.scene.shape.Box(1f, 1f, 1f);
@@ -47,15 +46,6 @@ public class Cube extends Shape
 	}
 	
 	/////Methods/////
-	/**
-	 * Purpose: To get the type of shape
-	 * @return String, the type of shape
-	 */
-        @Override
-	public String getShapeType()
-	{
-		return shapeType;
-	}
 	
 	/**
 	 * Purpose: To define a toString method for type cube
@@ -63,6 +53,6 @@ public class Cube extends Shape
         @Override
 	public String toString()
 	{
-		return shapeType + " with " + getMaterial().getName();
+		return getShapeType() + " with " + getMaterial().getName();
 	}
 }
